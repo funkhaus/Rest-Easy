@@ -1,6 +1,22 @@
 <?php
 
 /*
+ * Primary function to gather and serializer
+ * data for any given page
+ */
+    function rez_build_all_data() {
+
+        // build out data
+        $output = array(
+            'site'      => rez_build_site_data(),
+            'meta'      => rez_build_meta_data(),
+            'page'      => rez_build_page_data()
+        );
+
+		return apply_filters('rez_build_all_data', $output);
+    }
+
+/*
  * Build out data that goes on every page
  */
     function rez_build_site_data() {
@@ -55,20 +71,4 @@
 		}, $wp_query->posts);
 
 		return apply_filters('rez_build_page_data', $output);
-    }
-
-/*
- * Primary function to gather and serializer
- * data for any given page
- */
-    function rez_build_all_data() {
-
-        // build out data
-        $output = array(
-            'site'      => rez_build_site_data(),
-            'meta'      => rez_build_meta_data(),
-            'page'      => rez_build_page_data()
-        );
-
-		return apply_filters('rez_build_all_data', $output);
     }

@@ -9,7 +9,7 @@
 
         $output['title'] = get_the_title($attachment->ID);
 
-        // add image colors if FIC is installed
+        // add image colors if FIC (https://github.com/funkhaus/funky-colors) is installed
         if ( function_exists('get_primary_image_color') )
             $output['primary_color'] = get_primary_image_color($attachment->ID);
 
