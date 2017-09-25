@@ -10,23 +10,62 @@ Rest-Easy allows users and devs to do the following out of the box:
 
 Developers also have access to a wide array of filters to customize the information dumped onto a page.
 
+## Example
+
+### Basic:
+Install Rest-Easy, then navigate to your site and run the following in your JS console:
+
+```js
+fetch('/?contentType=json')
+    .then(res => { return res.json() })
+    .then(json => console.log(json))
+```
+
+This example fetches the current page of your site and returns its data as a JSON object. Right away, you've got a working RESTful API with plenty of detailed information at your disposal.
+
+### Using Filters
+Let's say you want to make a custom field called `_my_custom_field` available in the JSON object. Add the following to your `functions.php` file:
+
+```php
+function add_custom_field($input){
+    global $post;
+    $input['_my_custom_field'] = $post->_my_custom_field;
+
+    return $input;
+}
+add_filter('rez_serialize_post', 'add_custom_field');
+```
+Now, load a page on your site and run the same JS code as above. You'll see your custom field in `page[0]._my_custom_field`.
+
 ## API
 ### Flow
 Rest-Easy's entry point is `core.php`, where it:
 
 1. Checks each request's `CONTENT_TYPE` and query strings for a JSON request
 1. Echoes the JSON-encoded results of `builders.php`'s `rez_build_all_data` function
-1. Exits.
-
-Start in `rez_build_all_data` to determine which filters to hook into to customize your data.
-
-#### Filter Priority
-All of Rest-Easy's filters listed below are at [priority](https://developer.wordpress.org/reference/functions/add_filter/#parameters) 1, meaning they execute before the default Wordpress priority 10. This is so that you can ensure that your custom hooks will receive an associative array instead of a WP_Post object - Rest-Easy does the initial conversion for you.
+1. Exits
 
 ### Filters
-Most of Rest-Easy's functionality comes from its custom filters, which are designed to create varying levels of serialization for posts and dump those serialized JSON objects onto the page.
-
-TODO: Filter docs
+* `rez_build_all_data` - Highest level data builder. Returns:
+    ```
+    array(
+        // key      => filter
+        'site'      => rez_build_site_data,
+        'meta'      => rez_build_meta_data,
+        'page'      => rez_build_page_data
+    )
+    ```
+* `rez_build_site_data` - Builds general information about the site:
+    ```
+    array(
+        'themeUrl'      => 'URL of current WordPress theme',
+        'name'          => 'Site name',
+        'description'   => 'Site description',
+        'menus'         => array(
+            // Array of all menus on the site run through 'rez_serialize_menu' filter
+        )
+    )
+    ```
 
 ### Utility functions
 * `rez_get_next_page_id($target_post)` - Get the ID of the page/post following the `$target_post`.
