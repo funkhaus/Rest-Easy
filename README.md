@@ -46,6 +46,8 @@ Rest-Easy's entry point is `core.php`, where it:
 1. Exits
 
 ### Filters
+Tap into any of the filters below to add your own data. Default values are shown below.
+
 * `rez_build_all_data` - Highest level data builder. Returns:
     ```
     array(
@@ -66,6 +68,24 @@ Rest-Easy's entry point is `core.php`, where it:
         )
     )
     ```
+* `rez_serialize_menu` - Serializes a menu and its items:
+    ```
+    array(
+        'name'  => 'menu name',
+        'slug'  => 'menu slug',
+        'items' => array(
+            // Array of all items in this menu run through `rez_serialize_object` filter
+        )
+    )
+    ```
+* `rez_serialize_object` - Determines how to serialize a given object:
+    ```
+    * Runs rez_serialize_attachment filter if a media attachment
+    * Runs rez_serialize_nav_item filter if a menu item
+    * Runs rez_serialize_post filter if any other object type
+    ```
+
+TODO: Continue from here
 
 ### Utility functions
 * `rez_get_next_page_id($target_post)` - Get the ID of the page/post following the `$target_post`.
