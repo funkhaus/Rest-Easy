@@ -49,7 +49,7 @@ Rest-Easy's entry point is `core.php`, where it:
 Tap into any of the filters below to add your own data. Default values are shown below.
 
 * `rez_build_all_data` - Highest level data builder. Returns:
-    ```
+    ```php
     array(
         // key      => filter
         'site'      => rez_build_site_data,
@@ -58,7 +58,7 @@ Tap into any of the filters below to add your own data. Default values are shown
     )
     ```
 * `rez_build_site_data` - Builds general information about the site:
-    ```
+    ```php
     array(
         'themeUrl'      => 'URL of current WordPress theme',
         'name'          => 'Site name',
@@ -69,7 +69,7 @@ Tap into any of the filters below to add your own data. Default values are shown
     )
     ```
 * `rez_serialize_menu` - Serializes a menu and its items:
-    ```
+    ```php
     array(
         'name'  => 'menu name',
         'slug'  => 'menu slug',
@@ -79,13 +79,59 @@ Tap into any of the filters below to add your own data. Default values are shown
     )
     ```
 * `rez_serialize_object` - Determines how to serialize a given object:
-    ```
+    ```php
     * Runs rez_serialize_attachment filter if a media attachment
     * Runs rez_serialize_nav_item filter if a menu item
     * Runs rez_serialize_post filter if any other object type
     ```
+* `rez_serialize_attachment` - Serializes a media attachment:
+    ```php
+    array(
+        'title'             => 'title of attachment',
 
-TODO: Continue from here
+        // This section only runs if the Funky Colors plugin is installed
+        'primary_color'     => 'primary image color from Funky Colors',
+        'secondary_color'   => 'secondary image color from Funky Colors'
+        // End Funky-Colors-only section
+
+        'sizes' => array(
+            // Runs for each image size defined in WP (https://developer.wordpress.org/reference/functions/add_image_size/)
+            'size-slug' => array(
+                'url'       => 'url to image at given size',
+                'width'     => /* int - width in px */,
+                'height'    => /* int - height in px */
+            )
+        )
+    )
+    ```
+* `rez_serialize_nav_item` - Serializes a menu item:
+    ```php
+    array(
+        'title'         => 'menu item title',
+        'classes'       => 'menu item classes',
+        'permalink'     => 'permalink to target',
+        'relativePath'  => 'relative path to target',
+        'is_external'   => /* bool - true if type label == 'Custom Link' */
+    )
+    ```
+* `rez_serialize_post` - Generic serializer for any post type:
+    ```php
+    array(
+        'id'            => /* int - post ID */,
+        'title'         => 'post title',
+        'content'       => 'content with "the_content" filters applied',
+        'excerpt'       => 'post excerpt',
+        'permalink'     => 'post permalink',
+        'slug'          => 'post slug',
+        'relativePath'  => 'relative path to post',
+        'meta'          => array(
+            // Contains all meta fields without leading underscore
+            // $post->this_will_be_included
+            // $post->_this_will_not
+        ),
+        'date'          => /* int - Unix timestamp of post date */
+    )
+    ```
 
 ### Utility functions
 * `rez_get_next_page_id($target_post)` - Get the ID of the page/post following the `$target_post`.
