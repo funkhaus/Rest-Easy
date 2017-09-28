@@ -33,7 +33,9 @@ function rez_default_gather_related ($object) {
 
     // if it's a post, add prev and next
     if ( $object->post_type == 'post' ){
-        $prev = get_adjacent_post(false, '', false);
+        global $post;
+        the_post();
+        $prev = get_adjacent_post(false, '', true);
         $next = get_adjacent_post(false, '', false);
         $output['prev'] = $prev ? apply_filters('rez_serialize_object', $prev) : null;
         $output['next'] = $next ? apply_filters('rez_serialize_object', $next) : null;

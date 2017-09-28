@@ -30,7 +30,7 @@
             'name'     		=> get_bloginfo('name'),
 			'description'	=> get_bloginfo('description'),
 			'menus'         => array_map(function($menu){
-                return apply_filters('rez_serialize_menu', $menu->name);
+                return apply_filters('rez_serialize_object', $menu);
             }, $menus)
         );
 
@@ -68,8 +68,10 @@
 			$serialized = apply_filters('rez_serialize_object', $target_post);
 
 			return array_merge($serialized, array('related' => $related));
-            
+
 		}, $wp_query->posts);
+
+        wp_reset_postdata();
 
 		return apply_filters('rez_build_loop_data', $output);
     }

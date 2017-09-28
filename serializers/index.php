@@ -12,6 +12,8 @@
 
         if ( $object->post_type == 'attachment' ){
             $output = apply_filters('rez_serialize_attachment', $object);
+        } else if ( $object->taxonomy == 'nav_menu' ){
+            $output = apply_filters('rez_serialize_menu', $object);
         } else if ( $object->post_type == 'nav_menu_item' ) {
             $output = apply_filters('rez_serialize_nav_item', $object);
         } else {

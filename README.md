@@ -45,16 +45,14 @@ Now, load a page on your site and run the same JS code as above. You'll see your
 ## API
 
 ### Concepts
-To avoid infinite loops in page serialization, Rest-Easy uses three main concepts: __builders__,  __serializers__, and __related data__.
+To avoid infinite loops in page serialization, Rest-Easy uses two main concepts: __builders__ and  __serializers__.
 
 A __builder__ will run once on a page. It combines the output of several serializers and returns that data as an associative array, which is then JSON-encoded to form `jsonData`.
 
 A __serializer__ will take one piece of data from Wordpress and translate it into an associative array. For example, a serializer will take a post and turn it into an array with that post's title, content, permalink, and so on.
 
-Avoid calling a serializer from inside another serializer - only builders and __related data__ filters should call serializers. (TODO: Continue here)
-
 ### Flow
-Rest-Easy's entry point is `core.php`, where it:
+Rest-Easy's entry point is `rest-easy.php`, where it:
 
 1. Saving the output of the builder in `builders.php`'s `rez_build_all_data` function
 1. Determines how to send the requested output to the user by:
@@ -64,6 +62,7 @@ Rest-Easy's entry point is `core.php`, where it:
 ### Filters
 Tap into any of the filters below to add your own data. Default values are shown below.
 
+#### Builder Filters
 * `rez_build_all_data` - Highest level data builder. Returns:
     ```php
     array(
@@ -80,23 +79,31 @@ Tap into any of the filters below to add your own data. Default values are shown
         'name'          => 'Site name',
         'description'   => 'Site description',
         'menus'         => array(
-            // Array of all menus on the site run through 'rez_serialize_menu' filter
+            // Array of all menus on the site
         )
     )
     ```
-* `rez_serialize_menu` - Serializes a menu and its items:
+* `rez_build_meta_data` - Builds meta information about the current page.
     ```php
     array(
-        'name'  => 'menu name',
-        'slug'  => 'menu slug',
-        'items' => array(
-            // Array of all items in this menu run through `rez_serialize_object` filter
-        )
+        'self'          => 'permalink to current page',
+        'is404'         => /* bool - did this request return a 404 error? */
     )
     ```
-* `rez_serialize_object` - Determines how to serialize a given object:
+* `rez_build_loop_data` - Serializes all pages currently in [The Loop](https://codex.wordpress.org/The_Loop).
+    ```php
+    array(
+        // Array of serialized posts, pages, etc.
+        // By default, each element in the array will be the result of
+        // combining 'rez_serialize_object' and 'rez_gather_related'
+    )
+    ```
+
+#### Serializer Filters
+* `rez_serialize_object` - Generic serializer. Knows how to serialize any object.
     ```php
     * Runs rez_serialize_attachment filter if a media attachment
+    * Runs rez_serialize_menu filter if a menu
     * Runs rez_serialize_nav_item filter if a menu item
     * Runs rez_serialize_post filter if any other object type
     ```
@@ -117,6 +124,16 @@ Tap into any of the filters below to add your own data. Default values are shown
                 'width'     => /* int - width in px */,
                 'height'    => /* int - height in px */
             )
+        )
+    )
+    ```
+* `rez_serialize_menu` - Serializes a menu and its items:
+    ```php
+    array(
+        'name'  => 'menu name',
+        'slug'  => 'menu slug',
+        'items' => array(
+            // Array of all items in this menu run through `rez_serialize_object` filter
         )
     )
     ```
@@ -148,6 +165,17 @@ Tap into any of the filters below to add your own data. Default values are shown
         'date'          => /* int - Unix timestamp of post date */
     )
     ```
+* `rez_gather_related` - Gets related data for a given object:
+    ```php
+    array(
+        'featured_attachment'   => 'the serialized featured attachment, if this object has one',
+        'children'  => array(
+            // children of this page, if applicable, serialized with rez_serialize_post
+        ),
+        'next'      => /* object - the next page in menu order, if applicable, serialized with rez_serialize_post */,
+        'prev'      => /* object - the previous page in menu order, if applicable, serialized with rez_serialize_post */
+    )
+    ```
 
 ### Utility functions
 * `rez_get_next_page_id($target_post)` - Get the ID of the page/post following the `$target_post`.
@@ -164,8 +192,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.1
+Version: 1.2
 
+* 1.2 - Updated formatting and documentation
 * 1.1 - Renaming `rez_build_page_data` to `rez_build_loop_data`. Breaking change from 1.0!
 * 1.0 - Initial release
 
