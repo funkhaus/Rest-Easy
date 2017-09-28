@@ -1,6 +1,7 @@
 <?php
 
     // load serializers
+    include_once re_pd() . 'serializers/related.php';
     include_once re_pd() . 'serializers/attachment.php';
     include_once re_pd() . 'serializers/nav-item.php';
     include_once re_pd() . 'serializers/post.php';

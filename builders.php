@@ -10,7 +10,7 @@
         $output = array(
             'site'      => rez_build_site_data(),
             'meta'      => rez_build_meta_data(),
-            'page'      => rez_build_page_data()
+            'loop'      => rez_build_loop_data()
         );
 
 		return apply_filters('rez_build_all_data', $output);
@@ -55,7 +55,7 @@
 /*
  * Build out meta info for this page
  */
-    function rez_build_page_data() {
+    function rez_build_loop_data() {
 		global $wp_query;
 
 		// map over queried posts
@@ -68,7 +68,8 @@
 			$serialized = apply_filters('rez_serialize_object', $target_post);
 
 			return array_merge($serialized, array('related' => $related));
+            
 		}, $wp_query->posts);
 
-		return apply_filters('rez_build_page_data', $output);
+		return apply_filters('rez_build_loop_data', $output);
     }

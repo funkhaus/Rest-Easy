@@ -7,24 +7,29 @@ Rest-Easy allows users and devs to do the following out of the box:
 1. Expect the response to be a JSON object with relevant information about that page (and the site as a whole), including:
     * Site title, description, and menus
     * Page ID, title, content, permalink, neighbors, and more
+1. Expect that same data as a global JSON object called `jsonData` to be available on any page at load.
 
 Developers also have access to a wide array of filters to customize the information dumped onto a page.
 
-## Example
+## Examples
 
 ### Basic:
 Install Rest-Easy, then navigate to your site and run the following in your JS console:
+
+```js
+jsonData
+```
+You'll see all the available data from this page as a JSON object. Rest-Easy uses `wp_localize_script` to place this data on the page.
 
 ```js
 fetch('/?contentType=json')
     .then(res => { return res.json() })
     .then(json => console.log(json))
 ```
-
-This example fetches the current page of your site and returns its data as a JSON object. Right away, you've got a working RESTful API with plenty of detailed information at your disposal.
+This example fetches the current page of your site and returns its data (the contents of which are the same as `jsonData` above) as a JSON object. Right away, you've got a working RESTful API with plenty of detailed information at your disposal.
 
 ### Using Filters
-Let's say you want to make a custom field called `_my_custom_field` available in the JSON object. Add the following to your `functions.php` file:
+Let's say you want to make a custom field called `_my_custom_field` available in the JSON data. Add the following to your `functions.php` file:
 
 ```php
 function add_custom_field($input){
@@ -35,15 +40,26 @@ function add_custom_field($input){
 }
 add_filter('rez_serialize_post', 'add_custom_field');
 ```
-Now, load a page on your site and run the same JS code as above. You'll see your custom field in `page[0]._my_custom_field`.
+Now, load a page on your site and run the same JS code as above. You'll see your custom field in `jsonData.page[0]._my_custom_field`.
 
 ## API
+
+### Concepts
+To avoid infinite loops in page serialization, Rest-Easy uses three main concepts: __builders__,  __serializers__, and __related data__.
+
+A __builder__ will run once on a page. It combines the output of several serializers and returns that data as an associative array, which is then JSON-encoded to form `jsonData`.
+
+A __serializer__ will take one piece of data from Wordpress and translate it into an associative array. For example, a serializer will take a post and turn it into an array with that post's title, content, permalink, and so on.
+
+Avoid calling a serializer from inside another serializer - only builders and __related data__ filters should call serializers. (TODO: Continue here)
+
 ### Flow
 Rest-Easy's entry point is `core.php`, where it:
 
-1. Checks each request's `CONTENT_TYPE` and query strings for a JSON request
-1. Echoes the JSON-encoded results of `builders.php`'s `rez_build_all_data` function
-1. Exits
+1. Saving the output of the builder in `builders.php`'s `rez_build_all_data` function
+1. Determines how to send the requested output to the user by:
+    * checking the request's `CONTENT_TYPE` and query strings for a JSON request, echoing the `jsonData` object if one was found
+    * dumping the `jsonData` object onto the page with `wp_localize_script` otherwise
 
 ### Filters
 Tap into any of the filters below to add your own data. Default values are shown below.
@@ -54,7 +70,7 @@ Tap into any of the filters below to add your own data. Default values are shown
         // key      => filter
         'site'      => rez_build_site_data,
         'meta'      => rez_build_meta_data,
-        'page'      => rez_build_page_data
+        'loop'      => rez_build_loop_data
     )
     ```
 * `rez_build_site_data` - Builds general information about the site:
@@ -148,6 +164,12 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.0
+Version: 1.1
 
+* 1.1 - Renaming `rez_build_page_data` to `rez_build_loop_data`. Breaking change from 1.0!
 * 1.0 - Initial release
+
+______
+builders - run once, dump out data, call many serializers and related - gather related and serialize The Loop
+rename "builder" to "loop_builder"
+$related - take second argument that acts as relation entry point - only called on the results of The Loop by default - called on every post in The Loop, but no deeper
