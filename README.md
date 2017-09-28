@@ -197,8 +197,3 @@ Version: 1.2
 * 1.2 - Updated formatting and documentation
 * 1.1 - Renaming `rez_build_page_data` to `rez_build_loop_data`. Breaking change from 1.0!
 * 1.0 - Initial release
-
-______
-builders - run once, dump out data, call many serializers and related - gather related and serialize The Loop
-rename "builder" to "loop_builder"
-$related - take second argument that acts as relation entry point - only called on the results of The Loop by default - called on every post in The Loop, but no deeper
