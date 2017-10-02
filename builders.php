@@ -40,7 +40,7 @@
 /*
  * Build out meta info for this page
  */
-    function rez_build_meta_data($queried_object) {
+    function rez_build_meta_data() {
         global $wp;
         $permalink = home_url(add_query_arg(array(), $wp->request));
 
