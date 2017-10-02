@@ -17,11 +17,14 @@ Developers also have access to a wide array of filters to customize the informat
 Install Rest-Easy, then navigate to your site and run the following in your JS console:
 
 ```js
+// data placed directly on each page is in a global var called `jsonData`
 jsonData
 ```
 You'll see all the available data from this page as a JSON object. Rest-Easy uses `wp_localize_script` to place this data on the page.
 
 ```js
+// each page's `jsonData` is also available as raw JSON with a request to that page's URL
+// (CONTENT-TYPE header must be set to application/json or query param must be `contentType=json`)
 fetch('/?contentType=json')
     .then(res => { return res.json() })
     .then(json => console.log(json))
@@ -29,7 +32,7 @@ fetch('/?contentType=json')
 This example fetches the current page of your site and returns its data (the contents of which are the same as `jsonData` above) as a JSON object. Right away, you've got a working RESTful API with plenty of detailed information at your disposal.
 
 ### Using Filters
-Let's say you want to make a custom field called `_my_custom_field` available in the JSON data. Add the following to your `functions.php` file:
+Let's say you want to make a custom field called `_my_custom_field` available in the JSON data. Add the following to your theme's `functions.php` file:
 
 ```php
 function add_custom_field($input){
@@ -41,6 +44,8 @@ function add_custom_field($input){
 add_filter('rez_serialize_post', 'add_custom_field');
 ```
 Now, load a page on your site and run the same JS code as above. You'll see your custom field in `jsonData.page[0]._my_custom_field`.
+
+This example taps into the [serializer filters](#serializer-filters) documented below.
 
 ## API
 
@@ -54,7 +59,7 @@ A __serializer__ will take one piece of data from Wordpress and translate it int
 ### Flow
 Rest-Easy's entry point is `rest-easy.php`, where it:
 
-1. Saving the output of the builder in `builders.php`'s `rez_build_all_data` function
+1. Runs the serializers in `builders.php`'s `rez_build_all_data` function
 1. Determines how to send the requested output to the user by:
     * checking the request's `CONTENT_TYPE` and query strings for a JSON request, echoing the `jsonData` object if one was found
     * dumping the `jsonData` object onto the page with `wp_localize_script` otherwise
