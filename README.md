@@ -149,7 +149,9 @@ Tap into any of the filters below to add your own data. Default values are shown
         'classes'       => 'menu item classes',
         'permalink'     => 'permalink to target',
         'relativePath'  => 'relative path to target',
-        'is_external'   => /* bool - true if type label == 'Custom Link' */
+        'is_external'   => /* bool - true if type label == 'Custom Link' */,
+        'ID'            => 'int - menu item ID',
+        'children'      => 'object - results of serialize_nav_menu on submenus'
     )
     ```
 * `rez_serialize_post` - Generic serializer for any post type:
@@ -197,8 +199,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.2
+Version: 1.3
 
+* 1.3 - Added submenu serialization
 * 1.2 - Updated formatting and documentation
 * 1.1 - Renaming `rez_build_page_data` to `rez_build_loop_data`. Breaking change from 1.0!
 * 1.0 - Initial release
