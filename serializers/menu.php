@@ -2,10 +2,16 @@
 
     function rez_default_serialize_menu( $menu_object = null ){
 
+        if( $menu_object === null ){
+            return $output;
+        }
+
+        $nav_items = wp_get_nav_menu_items($menu_object->name);
+
         // Format menu items
         $formatted_items = array_map( function($nav_item){
             return apply_filters('rez_serialize_object', $nav_item);
-        }, $fetched );
+        }, $nav_items );
 
         $output = array(
             'name'          => $menu_object->name,
