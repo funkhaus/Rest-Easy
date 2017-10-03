@@ -18,7 +18,8 @@
             'relativePath'  => $relative_path,
             'is_external'   => $item->type_label == 'Custom Link',
             'ID'            => $item->ID,
-            'parent'        => (int)$item->menu_item_parent
+            'parent'        => (int)$item->menu_item_parent,
+            'children'      => array()
         );
 
         return $output;
