@@ -24,9 +24,21 @@
                 'url'       => $img_data[0],
                 'width'     => $img_data[1],
                 'height'    => $img_data[2],
-                'html'      => wp_get_attachment_image($attachment->ID, $size)
+                'html'      => wp_get_attachment_image($attachment->ID, $size),
             );
         }
+
+        // add alt text
+        $alt_text = get_post_meta($attachment->ID, '_wp_attachment_image_alt', true);
+        if(empty($alt_text)) {
+            // Try the caption if no alt text
+            $alt_text = trim(strip_tags( $attachment->post_excerpt ));
+        }
+        if(empty($alt_text)) {
+            // Try the title if no caption
+            $alt_text = trim(strip_tags( $attachment->post_title ));
+        }
+        $output['alt'] = $alt_text;
 
         return $output;
     }
