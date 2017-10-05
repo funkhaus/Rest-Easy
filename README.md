@@ -129,7 +129,8 @@ Tap into any of the filters below to add your own data. Default values are shown
                 'width'     => /* int - width in px */,
                 'height'    => /* int - height in px */
             )
-        )
+        ),
+        'alt'  => 'alt text - looks for Alt Text, then Caption, then attachment title'
     )
     ```
 * `rez_serialize_menu` - Serializes a menu and its items:
@@ -199,8 +200,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.3
+Version: 1.31
 
+* 1.31 - Added alt text to attachment serialization
 * 1.3 - Added submenu serialization
 * 1.2 - Updated formatting and documentation
 * 1.1 - Renaming `rez_build_page_data` to `rez_build_loop_data`. Breaking change from 1.0!
