@@ -200,8 +200,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.31
+Version: 1.32
 
+* 1.32 - Fixed menu ordering bug
 * 1.31 - Added alt text to attachment serialization
 * 1.3 - Added submenu serialization
 * 1.2 - Updated formatting and documentation

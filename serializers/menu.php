@@ -39,12 +39,12 @@
                 // ...then apply the appropriate filter and save under the correct menu item
                 if ($children) {
                     foreach( $children as $child ){
-                        $filtered_element['children'][$child['ID']] = $child;
+                        $filtered_element['children'][] = $child;
                     }
                 }
 
                 // save the top level
-                $branch[$element->ID] = $filtered_element;
+                $branch[] = $filtered_element;
                 // destroy the original element
                 unset($element);
             }
