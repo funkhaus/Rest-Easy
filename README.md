@@ -115,7 +115,11 @@ Tap into any of the filters below to add your own data. Default values are shown
 * `rez_serialize_attachment` - Serializes a media attachment:
     ```php
     array(
+        'ID'                => /* int - attachment ID */,
         'title'             => 'title of attachment',
+        'alt'               => 'alt text - looks for Alt Text, then Caption, then attachment title',
+        'caption'           => 'caption from WordPress',
+        'description'       => 'description from WordPress',
 
         // This section only runs if the Funky Colors plugin is installed
         'primary_color'     => 'primary image color from Funky Colors',
@@ -129,8 +133,7 @@ Tap into any of the filters below to add your own data. Default values are shown
                 'width'     => /* int - width in px */,
                 'height'    => /* int - height in px */
             )
-        ),
-        'alt'  => 'alt text - looks for Alt Text, then Caption, then attachment title'
+        )
     )
     ```
 * `rez_serialize_menu` - Serializes a menu and its items:
@@ -170,7 +173,8 @@ Tap into any of the filters below to add your own data. Default values are shown
             // $post->this_will_be_included
             // $post->_this_will_not
         ),
-        'date'          => /* int - Unix timestamp of post date */
+        'date'          => /* int - Unix timestamp of post date */,
+        'attachedMedia' => 'serialized array of media uploaded to this page'
     )
     ```
 * `rez_gather_related` - Gets related data for a given object:
@@ -200,8 +204,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.32
+Version: 1.33
 
+* 1.33 - Added more fields to attachments and attachedMedia array to posts
 * 1.32 - Fixed menu ordering bug
 * 1.31 - Added alt text to attachment serialization
 * 1.3 - Added submenu serialization

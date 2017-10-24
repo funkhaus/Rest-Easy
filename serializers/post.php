@@ -27,6 +27,13 @@
             'date'          => get_the_date('U', $target_post->ID)
         );
 
+        // Add all attached media
+        $attached_media = get_attached_media('image', $target_post->ID);
+        $output['attachedMedia'] = array();
+        foreach( $attached_media as $single_attached_media ){
+            $output['attachedMedia'][] = apply_filters('rez_serialize_object', $single_attached_media);
+        }
+
         return $output;
     }
     add_filter('rez_serialize_post', 'rez_default_serialize_post', 1);

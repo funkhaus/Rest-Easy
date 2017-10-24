@@ -7,7 +7,23 @@
         $attachment = get_post($attachment);
         $sizes = array_merge(get_intermediate_image_sizes(), array('full'));
 
+        // save alt text
+        $alt_text = get_post_meta($attachment->ID, '_wp_attachment_image_alt', true);
+        if(empty($alt_text)) {
+            // Try the caption if no alt text
+            $alt_text = trim(strip_tags( $attachment->post_excerpt ));
+        }
+        if(empty($alt_text)) {
+            // Try the title if no caption
+            $alt_text = trim(strip_tags( $attachment->post_title ));
+        }
+
+        // Save attachment data
+        $output['ID'] = $attachment->ID;
         $output['title'] = get_the_title($attachment->ID);
+        $output['alt'] = $alt_text;
+        $output['caption'] = trim(strip_tags( $attachment->post_excerpt ));
+        $output['description'] = trim(strip_tags( $attachment->post_content ));
 
         // add image colors if FIC (https://github.com/funkhaus/funky-colors) is installed
         if ( function_exists('get_primary_image_color') )
@@ -28,17 +44,6 @@
             );
         }
 
-        // add alt text
-        $alt_text = get_post_meta($attachment->ID, '_wp_attachment_image_alt', true);
-        if(empty($alt_text)) {
-            // Try the caption if no alt text
-            $alt_text = trim(strip_tags( $attachment->post_excerpt ));
-        }
-        if(empty($alt_text)) {
-            // Try the title if no caption
-            $alt_text = trim(strip_tags( $attachment->post_title ));
-        }
-        $output['alt'] = $alt_text;
 
         return $output;
     }
