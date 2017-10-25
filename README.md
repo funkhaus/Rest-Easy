@@ -204,8 +204,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.33
+Version: 1.34
 
+* 1.34 - Updated plugin URI
 * 1.33 - Added more fields to attachments and attachedMedia array to posts
 * 1.32 - Fixed menu ordering bug
 * 1.31 - Added alt text to attachment serialization
