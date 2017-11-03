@@ -20,8 +20,7 @@
         if ( !$excerpt ) {
             $content = get_post_field('post_content', $target_post->ID);
             $trimmed = apply_filters('wp_trim_excerpt', $content);
-            $stripped = strip_shortcodes($trimmed);
-            $excerpt = apply_filters('the_excerpt', $stripped);
+            $excerpt = apply_filters('the_excerpt', $trimmed);
         }
 
         $output = array(
