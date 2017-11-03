@@ -3,13 +3,8 @@
 function rez_default_gather_related ($object) {
     $output = [];
 
-    // if we have a featured image, add it
-    if ( $thumbnail_id = get_post_thumbnail_id( $object->ID ) ){
-        $output['featured_attachment'] = apply_filters('rez_serialize_object', get_post($thumbnail_id));
-    }
-
     // if it's a page...
-    if ( $object->post_type == 'page' ){
+    if ( $object->post_type == 'page' || $object->post_type == 'wps-product' ){
 
         // add children to related
         $args = array(
