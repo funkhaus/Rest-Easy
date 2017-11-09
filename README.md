@@ -110,6 +110,7 @@ Tap into any of the filters below to add your own data. Default values are shown
     * Runs rez_serialize_attachment filter if a media attachment
     * Runs rez_serialize_menu filter if a menu
     * Runs rez_serialize_nav_item filter if a menu item
+    * Runs rez_serialize_post filter, then adds `_wshop_product_id` as `productId` if a `wps-product` (see [WP-Shopify](https://github.com/funkhaus/wp-shopify) by Funkhaus)
     * Runs rez_serialize_post filter if any other object type
     ```
 * `rez_serialize_attachment` - Serializes a media attachment:
@@ -197,6 +198,7 @@ Tap into any of the filters below to add your own data. Default values are shown
 ## Integrations
 Rest-Easy is built to work well with other [Funkhaus](http://funkhaus.us) plugins:
 * [Funky Colors](https://github.com/funkhaus/funky-colors), which determines an image's main colors
+* [WP-Shopify](https://github.com/funkhaus/wp-shopify), which simplifies connecting Shopify to a Wordpress store
 
 --------
 
@@ -204,8 +206,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.34
+Version: 1.35
 
+* 1.35 - Added [WP-Shopify](https://github.com/funkhaus/wp-shopify) support
 * 1.34 - Updated plugin URI
 * 1.33 - Added more fields to attachments and attachedMedia array to posts
 * 1.32 - Fixed menu ordering bug

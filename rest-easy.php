@@ -3,7 +3,7 @@
  * Plugin Name: Rest Easy
  * Plugin URI:  https://github.com/funkhaus/rest-easy
  * Description: Rest-ify your site with zero effort and powerful customization.
- * Version:     1.34
+ * Version:     1.35
  * Author:      Funkhaus
  * Author URI:  http://funkhaus.us
  */

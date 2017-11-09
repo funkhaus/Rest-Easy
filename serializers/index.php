@@ -16,6 +16,10 @@
             $output = apply_filters('rez_serialize_menu', $object);
         } else if ( $object->post_type == 'nav_menu_item' ) {
             $output = apply_filters('rez_serialize_nav_item', $object);
+        } else if ( $object->post_type == 'wps-product' ) {
+            // Special serializer for wps-product post types - see https://github.com/funkhaus/wp-shopify
+            $output = apply_filters('rez_serialize_post', $object);
+            $output['productId'] = $object->_wshop_product_id;
         } else {
             $output = apply_filters('rez_serialize_post', $object);
         }
