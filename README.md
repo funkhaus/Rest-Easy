@@ -110,7 +110,7 @@ Tap into any of the filters below to add your own data. Default values are shown
     * Runs rez_serialize_attachment filter if a media attachment
     * Runs rez_serialize_menu filter if a menu
     * Runs rez_serialize_nav_item filter if a menu item
-    * Runs rez_serialize_post filter, then adds `_wshop_product_id` as `productId` if a `wps-product` (see [WP-Shopify](https://github.com/funkhaus/wp-shopify) by Funkhaus)
+    * Runs rez_serialize_post filter, then adds `_wshop_product_id` as `productId`, if a `wps-product` (see https://github.com/funkhaus/wp-shopify)
     * Runs rez_serialize_post filter if any other object type
     ```
 * `rez_serialize_attachment` - Serializes a media attachment:
