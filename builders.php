@@ -27,6 +27,7 @@
         // build out data
         $output = array(
             'themeUrl'      => get_template_directory_uri(),
+            'url'           => get_site_url(),
             'name'     		=> get_bloginfo('name'),
 			'description'	=> get_bloginfo('description'),
 			'menus'         => array_map(function($menu){

@@ -81,6 +81,7 @@ Tap into any of the filters below to add your own data. Default values are shown
     ```php
     array(
         'themeUrl'      => 'URL of current WordPress theme',
+        'url'           => 'URL of site'
         'name'          => 'Site name',
         'description'   => 'Site description',
         'menus'         => array(
@@ -206,8 +207,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.35
+Version: 1.36
 
+* 1.36 - Added site URL to default site builder
 * 1.35 - Added [WP-Shopify](https://github.com/funkhaus/wp-shopify) support
 * 1.34 - Updated plugin URI
 * 1.33 - Added more fields to attachments and attachedMedia array to posts
