@@ -37,6 +37,9 @@
 
         // if we have a featured image, add it
         if ( $thumbnail_id = get_post_thumbnail_id( $target_post->ID ) ){
+            $output['featuredAttachment'] = apply_filters('rez_serialize_object', get_post($thumbnail_id));
+
+            // included for backwards compatibility
             $output['featured_attachment'] = apply_filters('rez_serialize_object', get_post($thumbnail_id));
         }
 

@@ -16,10 +16,13 @@
             'classes'       => $item->classes,
             'permalink'     => $item->url,
             'relativePath'  => $relative_path,
-            'is_external'   => $item->type_label == 'Custom Link',
+            'isExternal'   => $item->type_label == 'Custom Link',
             'ID'            => $item->ID,
             'parent'        => (int)$item->menu_item_parent,
-            'children'      => array()
+            'children'      => array(),
+
+            // included for backwards compatibility
+            'is_external'   => $item->type_label == 'Custom Link',
         );
 
         return $output;

@@ -26,11 +26,19 @@
         $output['description'] = trim(strip_tags( $attachment->post_content ));
 
         // add image colors if FIC (https://github.com/funkhaus/funky-colors) is installed
-        if ( function_exists('get_primary_image_color') )
-            $output['primary_color'] = get_primary_image_color($attachment->ID);
+        if ( function_exists('get_primary_image_color') ){
+            $output['primaryColor'] = get_primary_image_color($attachment->ID);
 
-        if ( function_exists('get_second_image_color') )
+            // included for backwards compatibility
+            $output['primary_color'] = get_primary_image_color($attachment->ID);
+        }
+
+        if ( function_exists('get_second_image_color') ){
+            $output['secondaryColor'] = get_second_image_color($attachment->ID);
+
+            // included for backwards compatibility
             $output['secondary_color'] = get_second_image_color($attachment->ID);
+        }
 
         // build out sizes
         foreach ( $sizes as $size ){

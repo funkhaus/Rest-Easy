@@ -124,8 +124,8 @@ Tap into any of the filters below to add your own data. Default values are shown
         'description'       => 'description from WordPress',
 
         // This section only runs if the Funky Colors plugin is installed
-        'primary_color'     => 'primary image color from Funky Colors',
-        'secondary_color'   => 'secondary image color from Funky Colors'
+        'primaryColor'      => 'primary image color from Funky Colors',
+        'secondaryColor'    => 'secondary image color from Funky Colors'
         // End Funky-Colors-only section
 
         'sizes' => array(
@@ -155,7 +155,7 @@ Tap into any of the filters below to add your own data. Default values are shown
         'classes'       => 'menu item classes',
         'permalink'     => 'permalink to target',
         'relativePath'  => 'relative path to target',
-        'is_external'   => /* bool - true if type label == 'Custom Link' */,
+        'isExternal'    => /* bool - true if type label == 'Custom Link' */,
         'ID'            => 'int - menu item ID',
         'children'      => 'object - results of serialize_nav_menu on submenus'
     )
@@ -182,7 +182,7 @@ Tap into any of the filters below to add your own data. Default values are shown
 * `rez_gather_related` - Gets related data for a given object:
     ```php
     array(
-        'featured_attachment'   => 'the serialized featured attachment, if this object has one',
+        'featuredAttachment'    => 'the serialized featured attachment, if this object has one',
         'children'  => array(
             // children of this page, if applicable, serialized with rez_serialize_post
         ),
@@ -207,8 +207,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.36
+Version: 1.37
 
+* 1.37 - Consistent casing
 * 1.36 - Added site URL to default site builder
 * 1.35 - Added [WP-Shopify](https://github.com/funkhaus/wp-shopify) support
 * 1.34 - Updated plugin URI
