@@ -3,9 +3,9 @@
 /*
  * Removes site url to retrieve relative path
  */
-	function rez_remove_siteurl( $target_post ){
-		$replaced = str_replace( get_option('siteurl'), '', get_the_permalink( $target_post ) );
-
+	function rez_remove_siteurl( $url ){
+		$permalink = is_string($url) ? $url : get_permalink($url);
+		$replaced = str_replace( get_option('siteurl'), '', $url );
 		return rtrim( $replaced, '/' );
 	}
 

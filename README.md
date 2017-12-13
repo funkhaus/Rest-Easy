@@ -194,7 +194,7 @@ Tap into any of the filters below to add your own data. Default values are shown
 ### Utility functions
 * `rez_get_next_page_id($target_post)` - Get the ID of the page/post following the `$target_post`.
 * `rez_get_previous_page_id($target_post)` - Get the ID of the page/post before the `$target_post`.
-* `rez_remove_siteurl($target_post)` - Remove the siteurl to retrieve the relative path.
+* `rez_remove_siteurl($url)` - Creates a relative path from a local URL by removing siteurl
 
 ## Integrations
 Rest-Easy is built to work well with other [Funkhaus](http://funkhaus.us) plugins:

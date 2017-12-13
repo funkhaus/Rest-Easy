@@ -4,7 +4,8 @@
 
         $target_id = (int) $item->object_id;
 
-        $relative_path = rez_remove_siteurl( $target_id );
+        $permalink = $item->url;
+        $relative_path = rez_remove_siteurl( $permalink );
 
         // Make sure we get at least an slash from the relative path
         if( ! $relative_path ){
@@ -14,15 +15,15 @@
         $output = array(
             'title'         => $item->title,
             'classes'       => $item->classes,
-            'permalink'     => $item->url,
+            'permalink'     => $permalink,
             'relativePath'  => $relative_path,
-            'isExternal'   => $item->type_label == 'Custom Link',
+            'isExternal'    => strpos($relative_path, '/') !== 0,
             'ID'            => $item->ID,
-            'parent'        => (int)$item->menu_item_parent,
+            'parent'        => (int) $item->menu_item_parent,
             'children'      => array(),
 
             // included for backwards compatibility
-            'is_external'   => $item->type_label == 'Custom Link',
+            'is_external'   => strpos($relative_path, '/') !== 0,
         );
 
         return $output;

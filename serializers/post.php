@@ -30,7 +30,7 @@
             'excerpt'       => $excerpt,
             'permalink'     => get_permalink($target_post),
             'slug'          => $target_post->post_name,
-            'relativePath'  => rez_remove_siteurl( $target_post ),
+            'relativePath'  => rez_remove_siteurl( get_permalink($target_post) ),
             'meta'          => array_map( 'reset', $filtered_meta ),
             'date'          => get_the_date('U', $target_post->ID)
         );
