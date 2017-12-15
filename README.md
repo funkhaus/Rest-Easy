@@ -86,7 +86,8 @@ Tap into any of the filters below to add your own data. Default values are shown
         'description'   => 'Site description',
         'menus'         => array(
             // Array of all menus on the site
-        )
+        ),
+        'isMobile'      => 'Boolean - result of wp_is_mobile()'
     )
     ```
 * `rez_build_meta_data` - Builds meta information about the current page.
@@ -207,16 +208,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.37
+Version: 1.38
 
+* 1.38 - Added `isMobile` to site builder
 * 1.37 - Consistent casing
 * 1.36 - Added site URL to default site builder
 * 1.35 - Added [WP-Shopify](https://github.com/funkhaus/wp-shopify) support
-* 1.34 - Updated plugin URI
-* 1.33 - Added more fields to attachments and attachedMedia array to posts
-* 1.32 - Fixed menu ordering bug
-* 1.31 - Added alt text to attachment serialization
-* 1.3 - Added submenu serialization
-* 1.2 - Updated formatting and documentation
-* 1.1 - Renaming `rez_build_page_data` to `rez_build_loop_data`. Breaking change from 1.0!
-* 1.0 - Initial release

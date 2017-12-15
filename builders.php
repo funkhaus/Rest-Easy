@@ -32,7 +32,8 @@
 			'description'	=> get_bloginfo('description'),
 			'menus'         => array_map(function($menu){
                 return apply_filters('rez_serialize_object', $menu);
-            }, $menus)
+            }, $menus),
+            'isMobile'      => wp_is_mobile()
         );
 
         return apply_filters('rez_build_site_data', $output);
