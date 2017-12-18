@@ -1,41 +1,54 @@
 Rest-Easy is a Wordpress plugin designed to Rest-ify your site with zero effort and powerful customization.
 
-Rest-Easy allows users and devs to do the following out of the box:
-1. Request any page on a Wordpress site with either:
-    * the `CONTENT_TYPE: application/json` header, or
-    * `?contentType=json` as a query string in the URL
-1. Expect the response to be a JSON object with relevant information about that page (and the site as a whole), including:
-    * Site title, description, and menus
-    * Page ID, title, content, permalink, neighbors, and more
-1. Expect that same data as a global JSON object called `jsonData` to be available on any page at load.
+## Table of Contents
+1. [Installation](#installation)
+1. [Tutorial](#tutorial)
+    1. [Basics](#basics)
+    1. [Custom Filters](#custom-filters)
+1. [Core Concepts](#core-concepts)
+1. [Reference](#reference)
+    1. [Filters](#filters)
+        1. [Builder Filters](#builder-filters)
+        1. [Serializer Filters](#serializer-filters)
+    1. [Utility Functions](#utility-functions)
+    1. [Integrations](#integrations)
 
-Developers also have access to a wide array of filters to customize the information dumped onto a page.
+## Installation
+Rest-Easy was built as a companion to [Vuepress](https://github.com/funkhaus/vuepress), so if you're using VP, Rest-Easy will be installed automatically.
 
-## Examples
+If you're not using Vuepress, or would otherwise like to install the plugin manually, follow these steps:
 
-### Basic:
-Install Rest-Easy, then navigate to your site and run the following in your JS console:
+1. Download the [latest version of the plugin](https://github.com/funkhaus/Rest-Easy/archive/master.zip).
+1. Go to your site's plugin installation page (`[your-site.com]/wp-admin/plugin-install.php`).
+1. Click "Upload Plugin," then upload the .zip file from step 1.
+1. Go to your site's Plugins page (`[your-site.com]/wp-admin/plugins.php`) then click "Activate" on the Rest Easy plugin.
+
+That's it!
+
+## Tutorial
+If you're using Vuepress, the Basics section is handled automatically - you can continue reading for an idea of how Rest-Easy works, or head down to [Custom Filters](#custom-filters) for the next steps.
+
+### Basics
+Once you've installed Rest-Easy, navigate to any page on your site with `?contentType=json` added at the end of the URL.
+
+You'll see a serialized JSON object with the data of the page you requested - a lightweight and thorough summary of the current page, with zero setup on your end!
+
+To fetch this JSON-serialized version of a page programmatically, you can do something like this in your site's JS:
 
 ```js
-// data placed directly on each page is in a global var called `jsonData`
-jsonData
-```
-You'll see all the available data from this page as a JSON object. Rest-Easy uses `wp_localize_script` to place this data on the page.
-
-```js
-// each page's `jsonData` is also available as raw JSON with a request to that page's URL
-// (CONTENT-TYPE header must be set to application/json or query param must be `contentType=json`)
-fetch('/?contentType=json')
+fetch(myUrl + '?contentType=json')
     .then(res => { return res.json() })
     .then(json => console.log(json))
 ```
-This example fetches the current page of your site and returns its data (the contents of which are the same as `jsonData` above) as a JSON object. Right away, you've got a working RESTful API with plenty of detailed information at your disposal.
+This example [fetches](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) the requested page of your site and returns the same JSON object that you got with the `?contentType=json` query parameter. Right away, you've got a working RESTful API with plenty of detailed information at your disposal.
 
-### Using Filters
-Let's say you want to make a custom field called `_my_custom_field` available in the JSON data. Add the following to your theme's `functions.php` file:
+### Custom Filters
+Rest-Easy makes some assumptions about how you'd want a page to be serialized - but what if you want to change that serialization?
+
+Let's say you want to have a custom field called `_my_custom_field` that you want to make available in the data. Add the following to your theme's `functions.php` file:
 
 ```php
-function add_custom_field($input){
+function add_custom_field($input) {
     global $post;
     $input['_my_custom_field'] = $post->_my_custom_field;
 
@@ -43,20 +56,41 @@ function add_custom_field($input){
 }
 add_filter('rez_serialize_post', 'add_custom_field');
 ```
-Now, load a page on your site and run the same JS code as above. You'll see your custom field in `jsonData.page[0]._my_custom_field`.
 
-This example taps into the [serializer filters](#serializer-filters) documented below.
+Let's go through that line-by-line.
 
-## API
+* `function add_custom_field($input) {`
 
-### Concepts
+    Rest-Easy will first run its default serialization on a post, then the result to your custom filters as an associative array (`$input` in this example). Your filter will add, remove, or edit information, then pass the modified result to the next custom filter or, if there are none left, to the final JSON output.
+
+* `global $post;`
+
+    This is a reference to the WP object with which you're currently working.
+
+* `$input['myCustomField'] = $post->_my_custom_field;`
+
+    This line saves the value of `$post->_my_custom_field` to the `$input` array. You can give the data any name you want - here, it's camel-cased as `myCustomField`.
+
+* `return $input;`
+
+    This line passes the modified array along to the next custom filter or to the final JSON output.
+
+* `add_filter('rez_serialize_post', 'add_custom_field');`
+
+    Rest-Easy needs to know where your custom filters are defined, so we're using WordPress's `add_filter` function add the `add_custom_field` method (whose name was defined in the first line of this example) to Rest-Easy's `rez_serialize_post` filter.
+
+
+Now, whenever you load a post with `_my_custom_field` defined, you'll see your custom field in `jsonData.loop[0]._my_custom_field`!
+
+## Core Concepts
+(This is under-the-hood information - don't stress about this if you're not actually developing Rest-Easy!)
+
 To avoid infinite loops in page serialization, Rest-Easy uses two main concepts: __builders__ and  __serializers__.
 
 A __builder__ will run once on a page. It combines the output of several serializers and returns that data as an associative array, which is then JSON-encoded to form `jsonData`.
 
 A __serializer__ will take one piece of data from Wordpress and translate it into an associative array. For example, a serializer will take a post and turn it into an array with that post's title, content, permalink, and so on.
 
-### Flow
 Rest-Easy's entry point is `rest-easy.php`, where it:
 
 1. Runs the serializers in `builders.php`'s `rez_build_all_data` function
@@ -64,11 +98,25 @@ Rest-Easy's entry point is `rest-easy.php`, where it:
     * checking the request's `CONTENT_TYPE` and query strings for a JSON request, echoing the `jsonData` object if one was found
     * dumping the `jsonData` object onto the page with `wp_localize_script` otherwise
 
+## Reference
+
 ### Filters
-Tap into any of the filters below to add your own data. Default values are shown below.
+Add custom filters to build your own data:
+
+```php
+function custom_function_name($input){
+    // modify $input here...
+    return $input;
+}
+add_filter('desired_rest_easy_filter', 'custom_function_name');
+```
+
+Default values are shown below.
 
 #### Builder Filters
-* `rez_build_all_data` - Highest level data builder. Returns:
+Builders run once per page. They're designed to collect serialized data, add some high-level site/meta information, and output the resulting JSON object. Most of the time, you'll only use builders when adding very general site information - region detecting, custom site-wide taglines, etc.
+
+* `rez_build_all_data` - Highest level data builder - this is the top-level structure of the resulting JSON object. Returns:
     ```php
     array(
         // key      => filter
@@ -107,6 +155,8 @@ Tap into any of the filters below to add your own data. Default values are shown
     ```
 
 #### Serializer Filters
+Serializers are designed to take any WordPress object and translate it into JSON data. Serializers should be customized when you want to change the information that comes back from a single post, page, media item, etc. Post authors, media upload dates, and custom meta fields are great candidates for custom serializers.
+
 * `rez_serialize_object` - Generic serializer. Knows how to serialize any object.
     ```php
     * Runs rez_serialize_attachment filter if a media attachment
@@ -173,7 +223,7 @@ Tap into any of the filters below to add your own data. Default values are shown
         'relativePath'  => 'relative path to post',
         'meta'          => array(
             // Contains all meta fields without leading underscore
-            // $post->this_will_be_included
+            // $post->this_will_be_included_automatically
             // $post->_this_will_not
         ),
         'date'          => /* int - Unix timestamp of post date */,
