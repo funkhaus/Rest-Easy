@@ -50,7 +50,7 @@ Let's say you want to have a custom field called `_my_custom_field` that you wan
 ```php
 function add_custom_field($input) {
     global $post;
-    $input['_my_custom_field'] = $post->_my_custom_field;
+    $input['myCustomField'] = $post->_my_custom_field;
 
     return $input;
 }
