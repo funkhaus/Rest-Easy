@@ -61,7 +61,7 @@ Let's go through that line-by-line.
 
 * `function add_custom_field($input) {`
 
-    Rest-Easy will first run its default serialization on a post, then the result to your custom filters as an associative array (`$input` in this example). Your filter will add, remove, or edit information, then pass the modified result to the next custom filter or, if there are none left, to the final JSON output.
+    Rest-Easy will run its default serialization on a post first, then pass the result to your custom filters as an associative array (`$input` in this example). Your filter will add, remove, or edit information, then pass the modified result to the next custom filter or, if there are none left, to the final JSON output.
 
 * `global $post;`
 
