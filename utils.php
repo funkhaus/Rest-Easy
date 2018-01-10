@@ -5,7 +5,7 @@
  */
 	function rez_remove_siteurl( $url ){
 		$permalink = is_string($url) ? $url : get_permalink($url);
-		$replaced = str_replace( get_option('siteurl'), '', $url );
+		$replaced = str_replace( get_option('siteurl'), '', $permalink );
 		return rtrim( $replaced, '/' );
 	}
 

@@ -258,8 +258,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.39
+Version: 1.40
 
+* 1.40 - Fixed a utils bug
 * 1.39 - Fixed `rez_gather_related` functionality on repeated calls
 * 1.38 - Added `isMobile` to site builder
 * 1.37 - Consistent casing
