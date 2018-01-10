@@ -32,7 +32,10 @@
             'slug'          => $target_post->post_name,
             'relativePath'  => rez_remove_siteurl( get_permalink($target_post) ),
             'meta'          => array_map( 'reset', $filtered_meta ),
-            'date'          => get_the_date('U', $target_post->ID)
+            'date'          => get_the_date('U', $target_post->ID),
+            'isFront'       => get_option('page_on_front') == $target_post->ID,
+            'isBlog'        => get_option('page_for_posts') == $target_post->ID,
+            'isCategory'    => is_category()
         );
 
         // if we have a featured image, add it

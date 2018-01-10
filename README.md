@@ -227,7 +227,11 @@ Serializers are designed to take any WordPress object and translate it into JSON
             // $post->_this_will_not
         ),
         'date'          => /* int - Unix timestamp of post date */,
-        'attachedMedia' => 'serialized array of media uploaded to this page'
+        'attachedMedia' => 'serialized array of media uploaded to this page',
+        'featuredAttachment'    => 'serialized featured image',
+        'isFront'       => /* boolean - is this the front page? */,
+        'isBlog'        => /* boolean - is this the page for posts? */,
+        'isCategory'    => /* boolean - is this a category archive page? */
     )
     ```
 * `rez_gather_related` - Gets related data for a given object:
