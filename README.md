@@ -9,6 +9,9 @@ Rest-Easy is a Wordpress plugin designed to Rest-ify your site with zero effort 
 1. [Reference](#reference)
     1. [Filters](#filters)
         1. [Builder Filters](#builder-filters)
+            1. [Site Data](#site-data)
+            1. [Meta Data](#meta-data)
+            1. [Loop Data](#loop-data)
         1. [Serializer Filters](#serializer-filters)
     1. [Utility Functions](#utility-functions)
     1. [Integrations](#integrations)
@@ -125,6 +128,8 @@ Builders run once per page. They're designed to collect serialized data, add som
         'loop'      => rez_build_loop_data
     )
     ```
+
+##### Site Data
 * `rez_build_site_data` - Builds general information about the site:
     ```php
     array(
@@ -138,6 +143,8 @@ Builders run once per page. They're designed to collect serialized data, add som
         'isMobile'      => 'Boolean - result of wp_is_mobile()'
     )
     ```
+
+##### Meta Data
 * `rez_build_meta_data` - Builds meta information about the current page.
     ```php
     array(
@@ -145,6 +152,8 @@ Builders run once per page. They're designed to collect serialized data, add som
         'is404'         => /* bool - did this request return a 404 error? */
     )
     ```
+
+##### Loop Data
 * `rez_build_loop_data` - Serializes all pages currently in [The Loop](https://codex.wordpress.org/The_Loop).
     ```php
     array(
