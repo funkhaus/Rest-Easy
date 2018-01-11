@@ -261,7 +261,8 @@ Serializers are designed to take any WordPress object and translate it into JSON
         'featuredAttachment'    => 'serialized featured image',
         'isFront'       => /* boolean - is this the front page? */,
         'isBlog'        => /* boolean - is this the page for posts? */,
-        'isCategory'    => /* boolean - is this a category archive page? */
+        'isCategory'    => /* boolean - is this a category archive page? */,
+        'terms'         => 'Array of all terms this post contains'
     )
     ```
 

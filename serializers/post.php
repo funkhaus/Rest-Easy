@@ -53,6 +53,15 @@
             $output['attachedMedia'][] = apply_filters('rez_serialize_object', $single_attached_media);
         }
 
+        // Add terms
+        $taxonomy_names = get_post_taxonomies($target_post->ID);
+        foreach($taxonomy_names as $taxonomy_name) {
+            $terms = wp_get_post_terms( $target_post->ID, $taxonomy_name);
+            if( !empty($terms) ) {
+                $output['terms'][$taxonomy_name] = $terms;
+            }
+        }
+
         return $output;
     }
     add_filter('rez_serialize_post', 'rez_default_serialize_post', 1);
