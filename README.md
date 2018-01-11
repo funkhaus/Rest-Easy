@@ -100,6 +100,8 @@ To avoid infinite loops in page serialization, Rest-Easy uses two main concepts:
 
 A __builder__ will run once on a page. It combines the output of several serializers and returns that data as an associative array, which is then JSON-encoded to form `jsonData`.
 
+(Note that builders are also the only functions that can gather related posts - if anything else could do so, related posts would keep building on top of themselves without staying one level deep like they do in the Loop builder.)
+
 A __serializer__ will take one piece of data from Wordpress and translate it into an associative array. For example, a serializer will take a post and turn it into an array with that post's title, content, permalink, and so on.
 
 Rest-Easy's entry point is `rest-easy.php`, where it:
