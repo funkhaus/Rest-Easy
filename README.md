@@ -13,6 +13,12 @@ Rest-Easy is a Wordpress plugin designed to Rest-ify your site with zero effort 
             1. [Meta Data](#meta-data)
             1. [Loop Data](#loop-data)
         1. [Serializer Filters](#serializer-filters)
+            1. [Serialize Object](#serialize-object)
+            1. [Serialize Attachment](#serialize-attachment)
+            1. [Serialize Menu](#serialize-menu)
+            1. [Serialize Nav Item](#serialize-nav-item)
+            1. [Serialize Post](#serialize-post)
+            1. [Gather Related](#gather-related)
     1. [Utility Functions](#utility-functions)
     1. [Integrations](#integrations)
 
@@ -166,6 +172,7 @@ Builders run once per page. They're designed to collect serialized data, add som
 #### Serializer Filters
 Serializers are designed to take any WordPress object and translate it into JSON data. Serializers should be customized when you want to change the information that comes back from a single post, page, media item, etc. Post authors, media upload dates, and custom meta fields are great candidates for custom serializers.
 
+##### Serialize Object
 * `rez_serialize_object` - Generic serializer. Knows how to serialize any object.
     ```php
     * Runs rez_serialize_attachment filter if a media attachment
@@ -174,6 +181,8 @@ Serializers are designed to take any WordPress object and translate it into JSON
     * Runs rez_serialize_post filter, then adds `_wshop_product_id` as `productId`, if a `wps-product` (see https://github.com/funkhaus/wp-shopify)
     * Runs rez_serialize_post filter if any other object type
     ```
+
+##### Serialize Attachment
 * `rez_serialize_attachment` - Serializes a media attachment:
     ```php
     array(
@@ -198,6 +207,8 @@ Serializers are designed to take any WordPress object and translate it into JSON
         )
     )
     ```
+
+##### Serialize Menu
 * `rez_serialize_menu` - Serializes a menu and its items:
     ```php
     array(
@@ -208,6 +219,8 @@ Serializers are designed to take any WordPress object and translate it into JSON
         )
     )
     ```
+
+##### Serialize Nav Item
 * `rez_serialize_nav_item` - Serializes a menu item:
     ```php
     array(
@@ -220,6 +233,8 @@ Serializers are designed to take any WordPress object and translate it into JSON
         'children'      => 'object - results of serialize_nav_menu on submenus'
     )
     ```
+
+##### Serialize Post
 * `rez_serialize_post` - Generic serializer for any post type:
     ```php
     array(
@@ -243,6 +258,8 @@ Serializers are designed to take any WordPress object and translate it into JSON
         'isCategory'    => /* boolean - is this a category archive page? */
     )
     ```
+
+##### Gather Related
 * `rez_gather_related` - Gets related data for a given object:
     ```php
     array(
