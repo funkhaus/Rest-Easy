@@ -159,7 +159,9 @@ Builders run once per page. They're designed to collect serialized data, add som
     ```php
     array(
         'self'          => 'permalink to current page',
-        'is404'         => /* bool - did this request return a 404 error? */
+        'is404'         => /* bool - did this request return a 404 error? */,
+        'nextPage'      => 'permalink to next page in pagination, if present',
+        'previousPage'  => 'permalink to previous page in pagination, if present'
     )
     ```
 

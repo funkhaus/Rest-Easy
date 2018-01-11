@@ -51,6 +51,14 @@
             'is404'         => is_404()
         );
 
+        // add next/previous on paginated archive pages
+        if( get_next_posts_link() ){
+            $output['nextPage'] = get_next_posts_page_link();
+        }
+        if( get_previous_posts_link() ){
+            $output['previousPage'] = get_previous_posts_page_link();
+        }
+
         return apply_filters('rez_build_meta_data', $output);
     }
 
