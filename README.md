@@ -34,8 +34,6 @@ If you're not using Vuepress, or would otherwise like to install the plugin manu
 
 That's it!
 
-![Diagram showing flow of Rest-Easy data construction](https://i.imgur.com/GKdWBQu.png)
-
 ## Tutorial
 Take a look at the [visual docs](https://codepen.io/SanderMoolin/full/JMLvBb) to see a step-by-step roadmap of a Rest-Easy response. If you're using Vuepress, the Basics section is handled automatically - you can continue reading for an idea of how Rest-Easy works, or head down to [Custom Filters](#custom-filters) for the next steps.
 
@@ -52,6 +50,8 @@ fetch(myUrl + '?contentType=json')
     .then(json => console.log(json))
 ```
 This example [fetches](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) the requested page of your site and returns the same JSON object that you got with the `?contentType=json` query parameter. Right away, you've got a working RESTful API with plenty of detailed information at your disposal.
+
+![Diagram showing flow of Rest-Easy data construction](https://i.imgur.com/GKdWBQu.png)
 
 ### Custom Filters
 Rest-Easy makes some assumptions about how you'd want a page to be serialized - but what if you want to change that serialization?
