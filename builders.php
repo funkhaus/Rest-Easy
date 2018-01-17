@@ -48,6 +48,7 @@
 
         $output = array(
             'self'          => $permalink,
+            'title'         => wp_title('&raquo;', false),
             'is404'         => is_404()
         );
 
