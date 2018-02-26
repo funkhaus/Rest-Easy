@@ -52,6 +52,8 @@
             );
         }
 
+        // Add post type
+        $output['postType'] = get_post_type($attachment);
 
         return $output;
     }

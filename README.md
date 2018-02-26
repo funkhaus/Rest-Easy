@@ -203,6 +203,7 @@ Serializers are designed to take any WordPress object and translate it into JSON
         'secondaryColor'    => 'secondary image color from Funky Colors'
         // End Funky-Colors-only section
 
+        'postType'          => 'post type',
         'sizes' => array(
             // Runs for each image size defined in WP (https://developer.wordpress.org/reference/functions/add_image_size/)
             'size-slug' => array(
@@ -218,9 +219,10 @@ Serializers are designed to take any WordPress object and translate it into JSON
 * `rez_serialize_menu` - Serializes a menu and its items:
     ```php
     array(
-        'name'  => 'menu name',
-        'slug'  => 'menu slug',
-        'items' => array(
+        'name'      => 'menu name',
+        'slug'      => 'menu slug',
+        'postType'  => 'post type',
+        'items'     => array(
             // Array of all items in this menu run through `rez_serialize_object` filter
         )
     )
@@ -236,7 +238,8 @@ Serializers are designed to take any WordPress object and translate it into JSON
         'relativePath'  => 'relative path to target',
         'isExternal'    => /* bool - true if type label == 'Custom Link' */,
         'ID'            => 'int - menu item ID',
-        'children'      => 'object - results of serialize_nav_menu on submenus'
+        'children'      => 'object - results of serialize_nav_menu on submenus',
+        'postType'      => 'post type'
     )
     ```
 
@@ -262,7 +265,8 @@ Serializers are designed to take any WordPress object and translate it into JSON
         'isFront'       => /* boolean - is this the front page? */,
         'isBlog'        => /* boolean - is this the page for posts? */,
         'isCategory'    => /* boolean - is this a category archive page? */,
-        'terms'         => 'Array of all terms this post contains'
+        'terms'         => 'Array of all terms this post contains',
+        'postType'      => 'post type'
     )
     ```
 
@@ -295,8 +299,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.40
+Version: 1.41
 
+* 1.41 - Added postType field
 * 1.40 - Fixed a utils bug
 * 1.39 - Fixed `rez_gather_related` functionality on repeated calls
 * 1.38 - Added `isMobile` to site builder

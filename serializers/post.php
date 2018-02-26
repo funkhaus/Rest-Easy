@@ -62,6 +62,9 @@
             }
         }
 
+        // Add post type
+        $output['postType'] = get_post_type($target_post);
+
         return $output;
     }
     add_filter('rez_serialize_post', 'rez_default_serialize_post', 1);

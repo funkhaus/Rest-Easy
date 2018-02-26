@@ -24,6 +24,11 @@
             $output = apply_filters('rez_serialize_post', $object);
         }
 
+        // Add post type to result
+        if( !isset($output, 'postType') ){
+            $output['postType'] = get_post_type($object);
+        }
+
         return $output;
     }
     add_filter('rez_serialize_object', 'rez_default_serialize_object', 1);

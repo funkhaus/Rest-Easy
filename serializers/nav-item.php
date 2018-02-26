@@ -26,6 +26,9 @@
             'is_external'   => strpos($relative_path, '/') !== 0,
         );
 
+        // Add post type
+        $output['postType'] = get_post_type($item);
+
         return $output;
     }
     add_filter('rez_serialize_nav_item', 'rez_default_serialize_nav_item', 1);

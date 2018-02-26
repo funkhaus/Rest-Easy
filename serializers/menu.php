@@ -14,6 +14,9 @@
             'items'         => build_tree($nav_items)
         );
 
+        // Add post type
+        $output['postType'] = get_post_type($menu_object);
+
         return $output;
     }
 
