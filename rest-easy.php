@@ -3,7 +3,7 @@
  * Plugin Name: Rest Easy
  * Plugin URI:  https://github.com/funkhaus/rest-easy
  * Description: Rest-ify your site with zero effort and powerful customization.
- * Version:     1.40
+ * Version:     1.41
  * Author:      Funkhaus
  * Author URI:  http://funkhaus.us
  */
@@ -28,8 +28,8 @@ include_once re_pd() . 'serializers/index.php';
 	function rez_output_api_data($wp){
 
         // detect if client is trying to get json
-		$json_header = $_SERVER['CONTENT_TYPE'] == 'application/json';
-		$json_type = $_REQUEST['contentType'] == 'json';
+		$json_header = isset($_REQUEST['CONTENT_TYPE']) && $_SERVER['CONTENT_TYPE'] == 'application/json';
+		$json_type = isset($_REQUEST['contentType']) && $_REQUEST['contentType'] == 'json';
 
         // if so...
 		if ( $json_header || $json_type ){

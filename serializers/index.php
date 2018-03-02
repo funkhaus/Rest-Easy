@@ -25,7 +25,7 @@
         }
 
         // Add post type to result
-        if( !isset($output, 'postType') ){
+        if( !isset($output['postType']) ){
             $output['postType'] = get_post_type($object);
         }
 

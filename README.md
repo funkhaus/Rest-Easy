@@ -271,16 +271,18 @@ Serializers are designed to take any WordPress object and translate it into JSON
     ```
 
 ##### Gather Related
-* `rez_gather_related` - Gets related data for a given object:
+* `rez_gather_related($related, $target_post)` - Gets related data for a given object:
     ```php
-    array(
+    $related == array(
         'featuredAttachment'    => 'the serialized featured attachment, if this object has one',
         'children'  => array(
             // children of this page, if applicable, serialized with rez_serialize_post
         ),
         'next'      => /* object - the next page in menu order, if applicable, serialized with rez_serialize_post */,
         'prev'      => /* object - the previous page in menu order, if applicable, serialized with rez_serialize_post */
-    )
+    );
+
+    $target_post == /* The target $post object */
     ```
 
 ### Utility functions
