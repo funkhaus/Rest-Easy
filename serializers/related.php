@@ -40,7 +40,6 @@ function rez_default_gather_related ($related = [], $target = null) {
 
     return $related;
 }
-add_filter('rez_gather_related', 'rez_default_gather_related', 1);
-
+add_filter('rez_gather_related', 'rez_default_gather_related', 2);
 
 ?>
