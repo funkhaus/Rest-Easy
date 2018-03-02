@@ -18,12 +18,17 @@
             $alt_text = trim(strip_tags( $attachment->post_title ));
         }
 
+        // Get all meta fields without leading underscore
+        $meta = get_post_meta( $attachment->ID, '', true );
+        $filtered_meta = array_filter( $meta, 'filter_leading_underscore', ARRAY_FILTER_USE_KEY );
+
         // Save attachment data
         $output['ID'] = $attachment->ID;
         $output['title'] = get_the_title($attachment->ID);
         $output['alt'] = $alt_text;
         $output['caption'] = trim(strip_tags( $attachment->post_excerpt ));
         $output['description'] = trim(strip_tags( $attachment->post_content ));
+        $output['meta'] = array_map(function($i){ return $i[0]; }, $filtered_meta);
 
         // add image colors if FIC (https://github.com/funkhaus/funky-colors) is installed
         if ( function_exists('get_primary_image_color') ){
