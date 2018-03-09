@@ -25,7 +25,7 @@ function rez_default_gather_related ($related = [], $target = null) {
 
         if( $parent_id ){
             $parent = get_post($parent_id);
-            $related['parent'] = apply_filters('rez_serialize_object', get_post($next_id));
+            $related['parent'] = apply_filters('rez_serialize_object', get_post($parent_id));
         }
 
         // add next/prev to related
