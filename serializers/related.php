@@ -20,6 +20,14 @@ function rez_default_gather_related ($related = [], $target = null) {
             return apply_filters('rez_serialize_object', $child);
         }, $children);
 
+        // add parent
+        $parent_id = wp_get_post_parent_id($target_post->ID);
+
+        if( $parent_id ){
+            $parent = get_post($parent_id);
+            $related['parent'] = apply_filters('rez_serialize_object', get_post($next_id));
+        }
+
         // add next/prev to related
         $next_id = rez_get_next_page_id($target_post);
         $prev_id = rez_get_previous_page_id($target_post);

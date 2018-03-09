@@ -278,6 +278,7 @@ Serializers are designed to take any WordPress object and translate it into JSON
         'children'  => array(
             // children of this page, if applicable, serialized with rez_serialize_post
         ),
+        'parent'    => /* object - the parent of this page, serialized with rez_serialize_post */,
         'next'      => /* object - the next page in menu order, if applicable, serialized with rez_serialize_post */,
         'prev'      => /* object - the previous page in menu order, if applicable, serialized with rez_serialize_post */
     );
@@ -301,8 +302,9 @@ __Rest-Easy__
 
 http://funkhaus.us
 
-Version: 1.41
+Version: 1.42
 
+* 1.42 - Added parent to related post objects
 * 1.41 - Added postType field
 * 1.40 - Fixed a utils bug
 * 1.39 - Fixed `rez_gather_related` functionality on repeated calls
