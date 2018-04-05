@@ -1,12 +1,13 @@
 <?php
 
 /*
- * Removes site url to retrieve relative path
+ * DEPRECATED: this used to be a custom function,
+ * but now just uses the built in WP utility function.
+ * wp_make_link_relative should now be used everywhere,
+ * this will be removed in future versions.
  */
 	function rez_remove_siteurl( $url ){
-		$permalink = is_string($url) ? $url : get_permalink($url);
-		$replaced = str_replace( get_option('siteurl'), '', $permalink );
-		return rtrim( $replaced, '/' );
+		return wp_make_link_relative($url);
 	}
 
 /*

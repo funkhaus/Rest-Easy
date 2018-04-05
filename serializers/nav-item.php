@@ -5,7 +5,7 @@
         $target_id = (int) $item->object_id;
 
         $permalink = $item->url;
-        $relative_path = rez_remove_siteurl( $permalink );
+        $relative_path = wp_make_link_relative( $permalink );
 
         // Make sure we get at least an slash from the relative path
         if( ! $relative_path ){

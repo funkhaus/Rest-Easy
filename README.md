@@ -289,7 +289,6 @@ Serializers are designed to take any WordPress object and translate it into JSON
 ### Utility functions
 * `rez_get_next_page_id($target_post)` - Get the ID of the page/post following the `$target_post`.
 * `rez_get_previous_page_id($target_post)` - Get the ID of the page/post before the `$target_post`.
-* `rez_remove_siteurl($url)` - Creates a relative path from a local URL by removing siteurl
 
 ## Integrations
 Rest-Easy is built to work well with other [Funkhaus](http://funkhaus.us) plugins:
