@@ -12,22 +12,29 @@
             $relative_path = '/';
         }
 
+        // detect if this is the main blog page
+        $is_home = false;
+        if ( $item->object == 'page' ) {
+            $is_home = $item->object_id == get_option('page_for_posts');
+        }
+
+        // build output
         $output = array(
+            'id'            => $item->ID,
             'title'         => $item->title,
             'classes'       => $item->classes,
             'permalink'     => $permalink,
             'relativePath'  => $relative_path,
             'isExternal'    => strpos($relative_path, '/') !== 0,
-            'ID'            => $item->ID,
+            'isHome'        => $is_home,
             'parent'        => (int) $item->menu_item_parent,
             'children'      => array(),
+            'postType'      => get_post_type($item),
 
             // included for backwards compatibility
             'is_external'   => strpos($relative_path, '/') !== 0,
+            'ID'            => $item->ID
         );
-
-        // Add post type
-        $output['postType'] = get_post_type($item);
 
         return $output;
     }
