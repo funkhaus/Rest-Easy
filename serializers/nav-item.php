@@ -7,6 +7,10 @@
         $permalink = $item->url;
         $relative_path = wp_make_link_relative( $permalink );
 
+        // strip siteurl from permalink
+        // useful for testing if a link is to an external resource
+        $stripped_url = str_replace( get_option('siteurl'), '', $permalink );
+
         // Make sure we get at least an slash from the relative path
         if( ! $relative_path ){
             $relative_path = '/';
@@ -25,14 +29,14 @@
             'classes'       => $item->classes,
             'permalink'     => $permalink,
             'relativePath'  => $relative_path,
-            'isExternal'    => strpos($relative_path, '/') !== 0,
+            'isExternal'    => strpos($stripped_url, '/') !== 0,
             'isHome'        => $is_home,
             'parent'        => (int) $item->menu_item_parent,
             'children'      => array(),
             'postType'      => get_post_type($item),
 
             // included for backwards compatibility
-            'is_external'   => strpos($relative_path, '/') !== 0,
+            'is_external'   => strpos($stripped_url, '/') !== 0,
             'ID'            => $item->ID
         );
 
