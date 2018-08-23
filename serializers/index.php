@@ -9,6 +9,11 @@
 
     function rez_default_serialize_object($object){
         $output = null;
+        
+        // ignore if no object
+        if ($object === NULL) {
+            return null;
+        }
 
         if ( $object->post_type == 'attachment' ){
             $output = apply_filters('rez_serialize_attachment', $object);
