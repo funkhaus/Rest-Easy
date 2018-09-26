@@ -271,6 +271,7 @@ Serializers are designed to take any WordPress object and translate it into JSON
         'title'         => 'post title',
         'content'       => 'content with "the_content" filters applied',
         'excerpt'       => 'post excerpt',
+        'rawExcerpt'    => 'post excerpt - only if set manually',
         'permalink'     => 'post permalink',
         'slug'          => 'post slug',
         'relativePath'  => 'relative path to post',

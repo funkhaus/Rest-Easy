@@ -32,6 +32,7 @@
                 'title'         => get_the_title($target_post),
                 'content'       => apply_filters('the_content', $target_post->post_content),
                 'excerpt'       => $excerpt,
+                'rawExcerpt'    => get_the_excerpt($target_post->ID),
                 'permalink'     => get_permalink($target_post),
                 'slug'          => $target_post->post_name,
                 'relativePath'  => wp_make_link_relative( get_permalink($target_post) ),
