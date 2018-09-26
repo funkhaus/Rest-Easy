@@ -22,11 +22,28 @@ function rez_default_gather_related ($related = [], $target = null) {
 
         // add parent
         $parent_id = wp_get_post_parent_id($target_post->ID);
+        $serialized_parent = null;
 
         if( $parent_id ){
             $parent = get_post($parent_id);
-            $related['parent'] = apply_filters('rez_serialize_object', get_post($parent_id));
+            $serialized_parent = apply_filters('rez_serialize_object', get_post($parent_id));
+            $related['parent'] = $serialized_parent;
         }
+
+        $related['ancestors'] = array();
+
+        // add all ancestors
+        if( $serialized_parent ){
+            $related['ancestors'][] = $serialized_parent;
+            while($parent_id){
+                $parent_id = wp_get_post_parent_id($parent_id);
+                if( $parent_id ){
+                    $related['ancestors'][] = apply_filters('rez_serialize_object', get_post($parent_id));
+                }
+            }
+        }
+        // reverse to allow for easier breadcrumbs
+        $related['ancestors'] = array_reverse($related['ancestors']);
 
         // add next/prev to related
         $next_id = rez_get_next_page_id($target_post);

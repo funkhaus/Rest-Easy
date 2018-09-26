@@ -49,11 +49,11 @@ You'll see a serialized JSON object with the data of the page you requested - a 
 To fetch this JSON-serialized version of a page programmatically, you can do something like this in your site's JS:
 
 ```js
-fetch(myUrl + "?contentType=json")
+fetch(myUrl + '?contentType=json')
     .then(res => {
-        return res.json();
+        return res.json()
     })
-    .then(json => console.log(json));
+    .then(json => console.log(json))
 ```
 
 This example [fetches](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) the requested page of your site and returns the same JSON object that you got with the `?contentType=json` query parameter. Right away, you've got a working RESTful API with plenty of detailed information at your disposal.
@@ -297,6 +297,9 @@ Serializers are designed to take any WordPress object and translate it into JSON
     ```php
     $related == array(
         'featuredAttachment'    => 'the serialized featured attachment, if this object has one',
+        'ancestors' => array(
+            // ancestors of this page, if applicable, serialized with rez_serialize_post and ordered from farthest -> nearest (ie [great-grandparent, grandparent, parent])
+        ),
         'children'  => array(
             // children of this page, if applicable, serialized with rez_serialize_post
         ),
