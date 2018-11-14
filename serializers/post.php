@@ -49,10 +49,13 @@
             }
 
             // Add all attached media
-            $attached_media = get_attached_media('image', $target_post->ID);
-            $output['attachedMedia'] = array();
-            foreach( $attached_media as $single_attached_media ){
-                $output['attachedMedia'][] = apply_filters('rez_serialize_object', $single_attached_media);
+            // (Ignore if _custom_deactivate_attachment_serialization is set to 'on')
+            if ($target_post->_custom_deactivate_attachment_serialization != 'on'){
+                $attached_media = get_attached_media('image', $target_post->ID);
+                $output['attachedMedia'] = array();
+                foreach( $attached_media as $single_attached_media ){
+                    $output['attachedMedia'][] = apply_filters('rez_serialize_object', $single_attached_media);
+                }
             }
 
             // Add terms

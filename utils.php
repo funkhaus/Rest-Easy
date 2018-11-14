@@ -1,16 +1,6 @@
 <?php
 
 /*
- * DEPRECATED: this used to be a custom function,
- * but now just uses the built in WP utility function.
- * wp_make_link_relative should now be used everywhere,
- * this will be removed in future versions.
- */
-	function rez_remove_siteurl( $url ){
-		return wp_make_link_relative($url);
-	}
-
-/*
  * Next page/post ID
  */
 	function rez_get_next_page_id($target_post = null) {
@@ -91,3 +81,22 @@
 
 		return $output;
     }
+
+/*
+ * Specify whether or not a page should serialize all of its attachments.
+ */
+	function set_attachment_serialization($target_post, $val = true) {
+		$target_post = get_post($target_post);
+		update_post_meta($target_post->ID, '_custom_deactivate_attachment_serialization', $val ? 'on' : '')
+	}
+
+
+	/*
+	 * DEPRECATED FUNCTION: this used to be a custom function,
+	 * but now just uses the built in WP utility function.
+	 * wp_make_link_relative should now be used everywhere,
+	 * this will be removed in future versions.
+	 */
+		function rez_remove_siteurl( $url ){
+			return wp_make_link_relative($url);
+		}

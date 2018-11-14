@@ -316,6 +316,7 @@ Serializers are designed to take any WordPress object and translate it into JSON
 
 -   `rez_get_next_page_id($target_post)` - Get the ID of the page/post following the `$target_post`.
 -   `rez_get_previous_page_id($target_post)` - Get the ID of the page/post before the `$target_post`.
+-   `set_attachment_serialization($target_post, $value)` - Set whether or not a target post should automatically serialize its attached media. (Can save time when serializing pages with large amounts of attachments, for example.)
 
 ## Integrations
 
