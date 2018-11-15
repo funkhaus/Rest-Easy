@@ -87,7 +87,7 @@
  */
 	function set_attachment_serialization($target_post, $val = true) {
 		$target_post = get_post($target_post);
-		update_post_meta($target_post->ID, '_custom_deactivate_attachment_serialization', $val ? 'on' : '')
+		update_post_meta($target_post->ID, '_custom_deactivate_attachment_serialization', $val ? 'on' : '');
 	}
 
 
